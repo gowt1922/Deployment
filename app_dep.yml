@@ -1,0 +1,37 @@
+apiversion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app
+spec:
+  replicas: 1
+  selector:
+    matchLables:
+      app: angular-app
+templates:
+  metadata:
+  label:
+    app: angular-app
+ spec:
+  containers:
+  - name: my-web-app
+    image: Deployment/Webapp:latest
+    imagepullpolicy: Always
+    Ports:
+    - containerport: 8085
+#Service type load balancer
+
+apiversion: v1
+kind: service
+metadata:
+  name: my-web-app-svc
+ spec:
+  selector:
+    app: angular-app
+  ports:
+  - protocols: TCP
+    port: 8080
+    targetport: 8080
+   type: loadbalancer
+    
+      
+      
